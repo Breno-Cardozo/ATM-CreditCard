@@ -67,7 +67,7 @@ public class cardHolder
         {
             Console.WriteLine("Quantos reais você gostaria de depositar? ");
             double deposit = Double.Parse(Console.ReadLine());
-            currentUser.setBalance(deposit);
+            currentUser.setBalance(deposit + currentUser.getBalance());
             Console.WriteLine($"Obrigado pelo seu R$. Seu novo balanço é: {currentUser.getBalance()}");
         }
 
@@ -76,13 +76,13 @@ public class cardHolder
             Console.WriteLine("Quantos reais você deseja sacar: ");
             double withdrawal= Double.Parse(Console.ReadLine());
             //Validação se o usuário tem dinheiro o suficiente para sacar
-            if (currentUser.getBalance() > withdrawal) {
+            if (currentUser.getBalance() < withdrawal) {
                 Console.WriteLine("Valor insuficiente");
             }
             else
             {
                 currentUser.setBalance(currentUser.getBalance() - withdrawal);
-                Console.WriteLine("Você esta pronto para ir, obrigado!");
+                Console.WriteLine($"O seu novo saldo é {currentUser.getBalance()}");
             }
         }
         void balance(cardHolder currentUser)
@@ -90,11 +90,11 @@ public class cardHolder
             Console.WriteLine("Balanço atual: "+currentUser.getBalance());
         }
         List<cardHolder> cardHolders = new List<cardHolder>();
-        cardHolders.Add(new cardHolder("\"4532772818527395\"", 1234, "Breno", "Fagundes", 150.31));
-        cardHolders.Add(new cardHolder("\"4532772818527396\"", 4321, "Gustavo", "Sotz", 321.31));
-        cardHolders.Add(new cardHolder("\"4532772818527397\"", 9999, "Laura", "Jeronimo", 105.94));
-        cardHolders.Add(new cardHolder("\"4532772818527398\"", 2468, "Julia", "Ferri", 851.84));
-        cardHolders.Add(new cardHolder("\"4532772818527399\"", 4826, "Lois", "Reis", 54.27));
+        cardHolders.Add(new cardHolder("4532772818527395", 1234, "Breno", "Fagundes", 150.31));
+        cardHolders.Add(new cardHolder("4532772818527396", 4321, "Gustavo", "Sotz", 321.31));
+        cardHolders.Add(new cardHolder("4532772818527397", 9999, "Laura", "Jeronimo", 105.94));
+        cardHolders.Add(new cardHolder("4532772818527398", 2468, "Julia", "Ferri", 851.84));
+        cardHolders.Add(new cardHolder("4532772818527399", 4826, "Lois", "Reis", 54.27));
 
         Console.WriteLine("Bem vindo ao SimpleATM");
         Console.WriteLine("Por favor insira seu cartão de débito: ");
@@ -105,10 +105,10 @@ public class cardHolder
         {
             try
             {
-                debitCardNum = Console.ReadLine();
+                debitCardNum = Console.ReadLine().ToString();
                 //Validação se bate o número do cartão
                 currentUser = cardHolders.FirstOrDefault(a => a.cardNum == debitCardNum);
-                if (currentUser == null) { break; }
+                if (currentUser != null) { break; }
                 else { Console.WriteLine("Cartão não reconhecido. Por favor tente novamente"); }
             }
             catch { Console.WriteLine("Cartão não reconhecido. Por favor tente novamente"); }
